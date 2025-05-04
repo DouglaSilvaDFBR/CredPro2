@@ -3,65 +3,74 @@ import pandas as pd
 import math
 from pathlib import Path
 
-# Estilo com CSS personalizado para deixar parecido com a imagem
+import streamlit as st
+
+# Remover espaço padrão do Streamlit
+st.set_page_config(layout="wide")
+
+# CSS customizado pra deixar o visual parecido com o Excel
 st.markdown("""
     <style>
-        .menu {
-            background-color: #d3d3d3;
-            padding: 10px;
-            width: 200px;
-            height: 500px;
-            float: left;
-        }
-        .info {
-            background-color: white;
-            border: 1px solid black;
-            padding: 10px;
-            margin-left: 210px;
-            height: 500px;
-        }
-        .title {
+        .title-bar {
             background-color: #d5edcc;
             padding: 10px;
             font-weight: bold;
             font-size: 20px;
         }
+        .menu-box {
+            background-color: #d3d3d3;
+            padding: 10px;
+            height: 480px;
+            border: 1px solid #aaa;
+        }
+        .info-box {
+            background-color: white;
+            padding: 10px;
+            border: 1px solid black;
+            height: 480px;
+            overflow-y: auto;
+        }
+        .radio .stRadio > div {
+            flex-direction: column;
+        }
     </style>
 """, unsafe_allow_html=True)
 
-# Título superior
-st.markdown('<div class="title">CREDPRO2</div>', unsafe_allow_html=True)
+# Título da barra verde
+st.markdown('<div class="title-bar">CREDPRO2</div>', unsafe_allow_html=True)
 
-# Layout da página
-st.markdown('<div class="menu">', unsafe_allow_html=True)
-st.markdown("**MENU DE OPÇÕES**")
-menu = st.radio("", [
-    "NOVO CLIENTE",
-    "ACOMPANHAR VENDA",
-    "RELATORIO DE VENDA",
-    "ANEXAR DOCUMENTOS",
-    "CCA",
-    "CREDITO",
-    "SAIR"
-])
-st.markdown('</div>', unsafe_allow_html=True)
+# Layout com colunas
+col1, col2 = st.columns([1, 5])
 
-st.markdown('<div class="info"><strong>INFORMAÇÕES</strong><br><br>', unsafe_allow_html=True)
+with col1:
+    st.markdown('<div class="menu-box"><strong>MENU DE OPÇÕES</strong></div>', unsafe_allow_html=True)
+    menu = st.radio("", [
+        "NOVO CLIENTE",
+        "ACOMPANHAR VENDA",
+        "RELATORIO DE VENDA",
+        "ANEXAR DOCUMENTOS",
+        "CCA",
+        "CREDITO",
+        "SAIR"
+    ])
 
-# Conteúdo baseado na opção escolhida
-if menu == "NOVO CLIENTE":
-    st.write("Formulário para cadastrar novo cliente.")
-elif menu == "ACOMPANHAR VENDA":
-    st.write("Painel de acompanhamento de vendas.")
-elif menu == "RELATORIO DE VENDA":
-    st.write("Relatórios disponíveis para análise.")
-elif menu == "ANEXAR DOCUMENTOS":
-    st.write("Upload de documentos aqui.")
-elif menu == "CCA":
-    st.write("Acesso ao CCA.")
-elif menu == "CREDITO":
-    st.write("Informações sobre crédito.")
-elif menu == "SAIR":
-    st.write("Você saiu do sistema.")
+with col2:
+    st.markdown('<div class="info-box"><strong>INFORMAÇÕES</strong><br><br>', unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)
+    # Conteúdo de cada opção
+    if menu == "NOVO CLIENTE":
+        st.write("Formulário para cadastro de novo cliente.")
+    elif menu == "ACOMPANHAR VENDA":
+        st.write("Acompanhamento de vendas em tempo real.")
+    elif menu == "RELATORIO DE VENDA":
+        st.write("Relatório de vendas por período.")
+    elif menu == "ANEXAR DOCUMENTOS":
+        st.write("Área para anexar documentos do cliente.")
+    elif menu == "CCA":
+        st.write("Acesso ao sistema CCA.")
+    elif menu == "CREDITO":
+        st.write("Análise de crédito.")
+    elif menu == "SAIR":
+        st.write("Encerrando sessão.")
+
+    st.markdown('</div>', unsafe_allow_html=True)
