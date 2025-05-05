@@ -1,50 +1,13 @@
 import streamlit as st
-import pandas as pd
-import math
-from pathlib import Path
 
-import streamlit as st
+# Título da página
+st.set_page_config(page_title="Sistema de Vendas", layout="wide")
+st.title("Sistema de Gestão Comercial")
 
-# Remover espaço padrão do Streamlit
-st.set_page_config(layout="wide")
-
-# CSS customizado pra deixar o visual parecido com o Excel
-st.markdown("""
-    <style>
-        .title-bar {
-            background-color: #d5edcc;
-            padding: 10px;
-            font-weight: bold;
-            font-size: 20px;
-        }
-        .menu-box {
-            background-color: #d3d3d3;
-            padding: 10px;
-            height: 480px;
-            border: 1px solid #aaa;
-        }
-        .info-box {
-            background-color: white;
-            padding: 10px;
-            border: 1px solid black;
-            height: 480px;
-            overflow-y: auto;
-        }
-        .radio .stRadio > div {
-            flex-direction: column;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
-# Título da barra verde
-st.markdown('<div class="title-bar">CREDPRO2</div>', unsafe_allow_html=True)
-
-# Layout com colunas
-col1, col2 = st.columns([1, 5])
-
-with col1:
-    st.markdown('<div class="menu-box"><strong>MENU DE OPÇÕES</strong></div>', unsafe_allow_html=True)
-    menu = st.radio("", [
+# Menu lateral
+menu = st.sidebar.radio(
+    "Menu",
+    [
         "NOVO CLIENTE",
         "ACOMPANHAR VENDA",
         "RELATORIO DE VENDA",
@@ -52,25 +15,51 @@ with col1:
         "CCA",
         "CREDITO",
         "SAIR"
-    ])
+    ]
+)
 
-with col2:
-    st.markdown('<div class="info-box"><strong>INFORMAÇÕES</strong><br><br>', unsafe_allow_html=True)
+# Funções para cada página
+def novo_cliente():
+    st.header("Cadastro de Novo Cliente")
+    # Adicione aqui os campos e lógica para cadastro
 
-    # Conteúdo de cada opção
-    if menu == "NOVO CLIENTE":
-        st.write("Formulário para cadastro de novo cliente.")
-    elif menu == "ACOMPANHAR VENDA":
-        st.write("Acompanhamento de vendas em tempo real.")
-    elif menu == "RELATORIO DE VENDA":
-        st.write("Relatório de vendas por período.")
-    elif menu == "ANEXAR DOCUMENTOS":
-        st.write("Área para anexar documentos do cliente.")
-    elif menu == "CCA":
-        st.write("Acesso ao sistema CCA.")
-    elif menu == "CREDITO":
-        st.write("Análise de crédito.")
-    elif menu == "SAIR":
-        st.write("Encerrando sessão.")
+def acompanhar_venda():
+    st.header("Acompanhamento de Vendas")
+    # Lógica para visualizar vendas em andamento
 
-    st.markdown('</div>', unsafe_allow_html=True)
+def relatorio_venda():
+    st.header("Relatório de Vendas")
+    # Gerar e visualizar relatórios
+
+def anexar_documentos():
+    st.header("Anexar Documentos")
+    uploaded_file = st.file_uploader("Escolha um arquivo para anexar")
+    if uploaded_file:
+        st.success(f"Arquivo '{uploaded_file.name}' enviado com sucesso!")
+
+def cca():
+    st.header("Controle de Crédito e Análise (CCA)")
+    # Lógica de CCA
+
+def credito():
+    st.header("Solicitação de Crédito")
+    # Lógica para solicitação e aprovação de crédito
+
+def sair():
+    st.warning("Você escolheu sair. Encerrando sessão...")
+
+# Chamada da função de acordo com a opção do menu
+if menu == "NOVO CLIENTE":
+    novo_cliente()
+elif menu == "ACOMPANHAR VENDA":
+    acompanhar_venda()
+elif menu == "RELATORIO DE VENDA":
+    relatorio_venda()
+elif menu == "ANEXAR DOCUMENTOS":
+    anexar_documentos()
+elif menu == "CCA":
+    cca()
+elif menu == "CREDITO":
+    credito()
+elif menu == "SAIR":
+    sair()
